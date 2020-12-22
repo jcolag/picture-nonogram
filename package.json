@@ -1,0 +1,10 @@
+{
+  "name": "picture-nonogram",
+  "version": "1.0.0",
+  "description": "Generate a nonogram from a picture",
+  "main": "nono.js",
+  "repository": "git@github.com:jcolag/picture-nonogram.git",
+  "author": "John Colagioia <john@colagioia.net>",
+  "license": "AGPL-3.0-or-later",
+  "private": false
+}
