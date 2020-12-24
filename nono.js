@@ -28,6 +28,23 @@ function processFileInfo(err, features) {
 
   targetWidth = features.width / divisor;
   targetHeight = features.height / divisor;
+  im.convert(
+    [
+      imageFilename,
+      '-resize',
+      `${targetWidth}x${targetHeight}`,
+      smallFilename
+    ],
+    processSmallImage
+  );
+}
+
+function processSmallImage(err, stdout) {
+  if (err) {
+    throw err;
+  }
+
+  // Now that we have a smaller image, convert it to black-and-white.
 }
 
 function gcd(a, b) {
