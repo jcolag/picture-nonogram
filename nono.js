@@ -45,6 +45,28 @@ function processSmallImage(err, stdout) {
   }
 
   // Now that we have a smaller image, convert it to black-and-white.
+  im.convert(
+    [
+      smallFilename,
+      '-negate',
+      '-threshold',
+      '66%',
+      '-negate',
+      bwFilename
+    ],
+    processBwImage
+  );
+}
+
+function processBwImage(err, stdout) {
+  if (err) {
+    throw err;
+  }
+
+  fs.unlinkSync(smallFilename);
+  // This dumps a test description of each pixel, its coordinates
+  // and color.
+  console.log(stdout);
 }
 
 function gcd(a, b) {
