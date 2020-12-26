@@ -66,7 +66,20 @@ function processBwImage(err, stdout) {
   fs.unlinkSync(smallFilename);
   // This dumps a test description of each pixel, its coordinates
   // and color.
+  im.convert(
+    [
+      bwFilename,
+      'txt:'
+    ],
+    processBits
+  );
   console.log(stdout);
+}
+
+function processBits(err, stdout) {
+  if (err) {
+    throw err;
+  }
 }
 
 function gcd(a, b) {
