@@ -80,6 +80,19 @@ function processBits(err, stdout) {
   if (err) {
     throw err;
   }
+  // Create a grid of the target size.
+  const grid = Array.from(Array(targetHeight), () => new Array(targetWidth));
+  // Hack up the text output for processing.
+  const lines = stdout
+    .split('\n')
+    .map((l) => l.split(' '))
+    .slice(1);
+  const RleByRow = [];
+  const RleByColumn = [];
+  let row = 0;
+  let column = 0;
+
+  fs.unlinkSync(bwFilename);
 }
 
 function gcd(a, b) {
