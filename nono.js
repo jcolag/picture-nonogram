@@ -93,6 +93,16 @@ function processBits(err, stdout) {
   let column = 0;
 
   fs.unlinkSync(bwFilename);
+  lines.forEach((l) => {
+    if (l.length > 1) {
+      // For the lines that are meaningful (not headers or empty),
+      // plug the color into that location on a right-sized grid.
+      const coord = l[0].slice(0, -1).split(',');
+      const color = l[5].indexOf(0) < 0 ? 1 : 0;
+
+      grid[Number(coord[1])][Number(coord[0])] = color;
+    }
+  });
 }
 
 function gcd(a, b) {
