@@ -103,6 +103,30 @@ function processBits(err, stdout) {
       grid[Number(coord[1])][Number(coord[0])] = color;
     }
   });
+  for (let i = 0; i < targetHeight; i++) {
+    // For each row...
+    let j = 0;
+    let currentTotal = 0;
+    let currentColor = 0;
+
+    RleByRow.push([]);
+    while (j < targetWidth) {
+      // Count the consecutive cells for each color.
+      // This is, essentially, run-length encoding.
+      if (currentColor !== grid[i][j]) {
+        // Reset when the color changes.
+        RleByRow[i].push([currentColor, currentTotal]);
+        currentColor = grid[i][j];
+        currentTotal = 0;
+      }
+
+      // Continue counting.
+      j += 1;
+      currentTotal += 1;
+    }
+
+    RleByRow[i].push([currentColor, currentTotal]);
+  }
 }
 
 function gcd(a, b) {
