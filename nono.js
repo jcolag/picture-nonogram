@@ -80,6 +80,7 @@ function processBits(err, stdout) {
   if (err) {
     throw err;
   }
+
   // Create a grid of the target size.
   const grid = Array.from(Array(targetHeight), () => new Array(targetWidth));
   // Hack up the text output for processing.
@@ -152,6 +153,9 @@ function processBits(err, stdout) {
 
     RleByColumn[j].push([currentColor, currentTotal]);
   }
+
+  stripRle(RleByRow, 0);
+  stripRle(RleByColumn, 0);
 }
 
 function gcd(a, b) {
@@ -162,5 +166,17 @@ function gcd(a, b) {
   }
 
   return gcd(b, a % b);
+}
+
+function stripRle(encoding, valueToKeep) {
+  const height = encoding.length;
+
+  for (i = 0; i < height; i++) {
+    const newRow = encoding[i]
+      .filter((tuple) => tuple[0] === valueToKeep)
+      .map((tuple) => tuple[1]);
+
+    encoding[i] = newRow;
+  }
 }
 
