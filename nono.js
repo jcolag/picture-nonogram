@@ -106,27 +106,7 @@ function processBits(err, stdout) {
   });
   for (let i = 0; i < targetHeight; i++) {
     // For each row...
-    let j = 0;
-    let currentTotal = 0;
-    let currentColor = 0;
-
-    RleByRow.push([]);
-    while (j < targetWidth) {
-      // Count the consecutive cells for each color.
-      // This is, essentially, run-length encoding.
-      if (currentColor !== grid[i][j]) {
-        // Reset when the color changes.
-        RleByRow[i].push([currentColor, currentTotal]);
-        currentColor = grid[i][j];
-        currentTotal = 0;
-      }
-
-      // Continue counting.
-      j += 1;
-      currentTotal += 1;
-    }
-
-    RleByRow[i].push([currentColor, currentTotal]);
+    RleByRow.push(encodeRun(grid[i]));
   }
 
   for (let j = 0; j < targetWidth; j++) {
@@ -178,5 +158,29 @@ function stripRle(encoding, valueToKeep) {
 
     encoding[i] = newRow;
   }
+}
+
+function encodeRun(bits) {
+  const encoding = [];
+  let currentTotal = 0;
+  let currentColor = 0;
+  let count = 0;
+
+  while (count < bits.length) {
+    // Count the consecutive cells for each color.
+    // This is, essentially, run-length encoding.
+    if (currentColor !== bits[count]) {
+      // Reset when the color changes.
+      encoding.push([currentColor, currentTotal]);
+      currentColor = bits[count];
+      currentTotal = 0;
+    }
+
+    count += 1;
+    currentTotal += 1;
+  }
+
+  encoding.push([currentColor, currentTotal]);
+  return encoding;
 }
 
