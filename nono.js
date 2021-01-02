@@ -28,6 +28,22 @@ function processFileInfo(err, features) {
 
   targetWidth = features.width / divisor;
   targetHeight = features.height / divisor;
+
+  if (targetWidth < 15 || targetHeight < 15) {
+    let aspect = {
+      height:  targetHeight,
+      width:  targetWidth,
+    };
+    const smaller = targetWidth < targetHeight ? "width" : "height";
+    const larger = targetWidth < targetHeight ? "height" : "width";
+    const ratio = 15 / aspect[smaller];
+
+    aspect[smaller] = 15;
+    aspect[larger] = Math.trunc(aspect[larger] * ratio + 0.5);
+    targetHeight = aspect.height;
+    targetWidth = aspect.width;
+  }
+
   im.convert(
     [
       imageFilename,
