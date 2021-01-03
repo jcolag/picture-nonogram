@@ -1,6 +1,8 @@
 const fs = require('fs');
 const im = require('imagemagick');
 
+const minimumSize = 15;
+
 if (process.argv.length < 3) {
   console.log(`${process.argv[1]} requires an image file.`);
   process.exit(1);
@@ -29,16 +31,16 @@ function processFileInfo(err, features) {
   targetWidth = features.width / divisor;
   targetHeight = features.height / divisor;
 
-  if (targetWidth < 15 || targetHeight < 15) {
+  if (targetWidth < minimumSize || targetHeight < minimumSize) {
     let aspect = {
       height:  targetHeight,
       width:  targetWidth,
     };
     const smaller = targetWidth < targetHeight ? "width" : "height";
     const larger = targetWidth < targetHeight ? "height" : "width";
-    const ratio = 15 / aspect[smaller];
+    const ratio = minimumSize / aspect[smaller];
 
-    aspect[smaller] = 15;
+    aspect[smaller] = minimumSize;
     aspect[larger] = Math.trunc(aspect[larger] * ratio + 0.5);
     targetHeight = aspect.height;
     targetWidth = aspect.width;
