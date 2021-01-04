@@ -31,6 +31,13 @@ function processFileInfo(err, features) {
   targetWidth = features.width / divisor;
   targetHeight = features.height / divisor;
 
+  if (targetWidth > minimumSize && targetHeight > minimumSize) {
+    const newRatio = simplifyAspectRatio(targetWidth / targetHeight, 50);
+
+    targetWidth = newRatio[0];
+    targetHeight = newRatio[1];
+  }
+
   if (targetWidth < minimumSize || targetHeight < minimumSize) {
     let aspect = {
       height:  targetHeight,
@@ -182,5 +189,37 @@ function encodeRun(bits) {
 
   encoding.push([currentColor, currentTotal]);
   return encoding;
+}
+
+function simplifyAspectRatio(val, lim) {
+  // This code comes from https://stackoverflow.com/a/43016456/3438854
+  // by ccpizza (https://stackoverflow.com/users/191246/ccpizza),
+  // licensed CC-BY-SA 3.0
+  var lower = [0, 1];
+  var upper = [1, 0];
+
+  while (true) {
+    var mediant = [lower[0] + upper[0], lower[1] + upper[1]];
+
+    if (val * mediant[1] > mediant[0]) {
+      if (lim < mediant[1]) {
+        return upper;
+      }
+      lower = mediant;
+    } else if (val * mediant[1] == mediant[0]) {
+      if (lim >= mediant[1]) {
+        return mediant;
+      }
+      if (lower[1] < upper[1]) {
+        return lower;
+      }
+      return upper;
+    } else {
+      if (lim < mediant[1]) {
+        return lower;
+      }
+      upper = mediant;
+    }
+  }
 }
 
