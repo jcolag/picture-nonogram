@@ -64,9 +64,13 @@ function processFileInfo(err, features) {
   );
 }
 
-function processSmallImage(err, stdout) {
+function processSmallImage(err, stdout, percentage) {
   if (err) {
     throw err;
+  }
+
+  if (percentage === '') {
+    percentage = 66;
   }
 
   // Now that we have a smaller image, convert it to black-and-white.
@@ -75,7 +79,7 @@ function processSmallImage(err, stdout) {
       smallFilename,
       '-negate',
       '-threshold',
-      '66%',
+      `${percentage}%`,
       '-negate',
       bwFilename
     ],
