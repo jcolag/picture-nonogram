@@ -88,7 +88,6 @@ function processBwImage(err, stdout) {
     throw err;
   }
 
-  fs.unlinkSync(smallFilename);
   // This dumps a test description of each pixel, its coordinates
   // and color.
   im.convert(
@@ -118,7 +117,6 @@ function processBits(err, stdout) {
   let row = 0;
   let column = 0;
 
-  fs.unlinkSync(bwFilename);
   lines.forEach((l) => {
     if (l.length > 1) {
       // For the lines that are meaningful (not headers or empty),
@@ -143,6 +141,8 @@ function processBits(err, stdout) {
 
   stripRle(RleByRow, 0);
   stripRle(RleByColumn, 0);
+  fs.unlinkSync(smallFilename);
+  fs.unlinkSync(bwFilename);
 }
 
 function gcd(a, b) {
