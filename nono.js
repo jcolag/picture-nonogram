@@ -2,6 +2,7 @@ const fs = require('fs');
 const im = require('imagemagick');
 
 const minimumSize = 15;
+let defaultPercentBlack = 66;
 
 if (process.argv.length < 3) {
   console.log(`${process.argv[1]} requires an image file.`);
@@ -70,7 +71,7 @@ function processSmallImage(err, stdout, percentage) {
   }
 
   if (percentage === '') {
-    percentage = 66;
+    percentage = defaultPercentBlack;
   }
 
   // Now that we have a smaller image, convert it to black-and-white.
@@ -101,7 +102,6 @@ function processBwImage(err, stdout) {
     ],
     processBits
   );
-  console.log(stdout);
 }
 
 function processBits(err, stdout) {
