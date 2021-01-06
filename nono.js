@@ -167,6 +167,10 @@ function stripRle(encoding, valueToKeep) {
       .filter((tuple) => tuple[0] === valueToKeep)
       .map((tuple) => tuple[1]);
 
+    while (newRow[0] === 0) {
+      newRow.shift();
+    }
+
     encoding[i] = newRow;
   }
 }
