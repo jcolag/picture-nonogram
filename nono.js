@@ -145,6 +145,22 @@ function processBits(err, stdout) {
 
   stripRle(RleByRow, 0);
   stripRle(RleByColumn, 0);
+
+  const onBits = RleByRow
+    .map((row) => row.reduce((a, b) => a + b, 0))
+    .reduce((a, b) => a + b)
+    / (targetWidth * targetHeight);
+
+  if (onBits > .75) {
+    defaultPercentBlack += 1;
+    processSmallImage(null, null, defaultPercentBlack);
+    return;
+  } else if (onBits < 0.35) {
+    defaultPercentBlack -= 1;
+    processSmallImage(null, null, defaultPercentBlack);
+    return;
+  }
+
   fs.unlinkSync(smallFilename);
   fs.unlinkSync(bwFilename);
 }
