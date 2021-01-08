@@ -2,6 +2,8 @@ const fs = require('fs');
 const im = require('imagemagick');
 
 const minimumSize = 15;
+const minColor = 0.35;
+const maxColor = 0.75;
 let defaultPercentBlack = 66;
 
 if (process.argv.length < 3) {
@@ -151,11 +153,11 @@ function processBits(err, stdout) {
     .reduce((a, b) => a + b)
     / (targetWidth * targetHeight);
 
-  if (onBits > .75) {
+  if (onBits > maxColor) {
     defaultPercentBlack += 1;
     processSmallImage(null, null, defaultPercentBlack);
     return;
-  } else if (onBits < 0.35) {
+  } else if (onBits < minColor) {
     defaultPercentBlack -= 1;
     processSmallImage(null, null, defaultPercentBlack);
     return;
