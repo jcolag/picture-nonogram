@@ -1,15 +1,12 @@
 const fs = require('fs');
 const im = require('imagemagick');
+const superagent = require('superagent');
 
 const minimumSize = 15;
 const minColor = 0.35;
 const maxColor = 0.75;
 let defaultPercentBlack = 66;
 
-if (process.argv.length < 3) {
-  console.log(`${process.argv[1]} requires an image file.`);
-  process.exit(1);
-}
 
 const smallFilename = 'test-small.png';
 const bwFilename = 'test-bw.png';
@@ -17,7 +14,14 @@ let imageFilename = process.argv[2];
 let targetWidth = -1;
 let targetHeight = -1;
 
-im.identify(imageFilename, processFileInfo);
+if (process.argv.length < 3) {
+} else {
+  processExistingImage(process.argv[2]);
+}
+
+function processExistingImage(filename) {
+  im.identify(filename, processFileInfo);
+}
 
 function processFileInfo(err, features) {
   if (err) {
