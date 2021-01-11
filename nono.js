@@ -10,12 +10,13 @@ let defaultPercentBlack = 66;
 
 const smallFilename = 'test-small.png';
 const bwFilename = 'test-bw.png';
-let imageFilename = process.argv[2];
+let imageFilename = 'downloaded-image.jpg';
 let targetWidth = -1;
 let targetHeight = -1;
 
 if (process.argv.length < 3) {
 } else {
+  imageFilename = process.argv[2];
   processExistingImage(process.argv[2]);
 }
 
