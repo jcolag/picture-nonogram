@@ -15,9 +15,13 @@ let targetWidth = -1;
 let targetHeight = -1;
 
 if (process.argv.length < 3) {
+  downloadAndProcessImage();
 } else {
   imageFilename = process.argv[2];
   processExistingImage(process.argv[2]);
+}
+
+function downloadAndProcessImage() {
 }
 
 function processExistingImage(filename) {
