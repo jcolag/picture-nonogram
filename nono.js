@@ -22,6 +22,19 @@ if (process.argv.length < 3) {
 }
 
 function downloadAndProcessImage() {
+  superagent
+    .get('https://pxhere.com/en/random')
+    .end((err, res) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      if (res.status !== 200) {
+        console.log(`Failed with HTTP status code ${res.status}.`);
+        return;
+      }
+    });
 }
 
 function processExistingImage(filename) {
