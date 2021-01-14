@@ -34,6 +34,15 @@ function downloadAndProcessImage() {
         console.log(`Failed with HTTP status code ${res.status}.`);
         return;
       }
+
+      const line = res.text
+        .split('\n')
+        .filter((line) => line.indexOf('<a href="/en/photo/') >= 0)
+        [3];
+      const src = ' src="';
+      const urlStart = line.indexOf(src) + src.length;
+      const urlEnd = line.indexOf('"', urlStart);
+      const url = line.slice(urlStart, urlEnd);
     });
 }
 
