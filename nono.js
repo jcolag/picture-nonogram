@@ -43,6 +43,21 @@ function downloadAndProcessImage() {
       const urlStart = line.indexOf(src) + src.length;
       const urlEnd = line.indexOf('"', urlStart);
       const url = line.slice(urlStart, urlEnd);
+
+      superagent
+        .get(url)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+
+          if (res.status !== 200) {
+            console.log(`Download failed with HTTP status code ${res.status}.`);
+            return;
+          }
+
+        });
     });
 }
 
