@@ -57,6 +57,11 @@ function downloadAndProcessImage() {
             return;
           }
 
+          fs.writeFile(imageFilename, res.body, null, (err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
         });
     });
 }
