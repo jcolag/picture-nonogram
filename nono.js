@@ -61,6 +61,8 @@ function downloadAndProcessImage() {
             if (err) {
               console.log(err);
             }
+
+            im.identify(imageFilename, processFileInfo);
           });
         });
     });
