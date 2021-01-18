@@ -15,13 +15,13 @@ let targetWidth = -1;
 let targetHeight = -1;
 
 if (process.argv.length < 3) {
-  downloadAndProcessImage();
+  downloadRandomImageList();
 } else {
   imageFilename = process.argv[2];
   processExistingImage(process.argv[2]);
 }
 
-function downloadAndProcessImage() {
+function downloadRandomImageList() {
   superagent
     .get('https://pxhere.com/en/random')
     .end((err, res) => {
@@ -35,36 +35,40 @@ function downloadAndProcessImage() {
         return;
       }
 
-      const line = res.text
-        .split('\n')
-        .filter((line) => line.indexOf('<a href="/en/photo/') >= 0)
-        [3];
-      const src = ' src="';
-      const urlStart = line.indexOf(src) + src.length;
-      const urlEnd = line.indexOf('"', urlStart);
-      const url = line.slice(urlStart, urlEnd);
+      downloadAndProcessImage(res.text);
+    });
+}
 
-      superagent
-        .get(url)
-        .end((err, res) => {
-          if (err) {
-            console.log(err);
-            return;
-          }
+function downloadAndProcessImage(html) {
+  const line = html
+    .split('\n')
+    .filter((line) => line.indexOf('<a href="/en/photo/') >= 0)
+    [3];
+  const src = ' src="';
+  const urlStart = line.indexOf(src) + src.length;
+  const urlEnd = line.indexOf('"', urlStart);
+  const url = line.slice(urlStart, urlEnd);
 
-          if (res.status !== 200) {
-            console.log(`Download failed with HTTP status code ${res.status}.`);
-            return;
-          }
+  superagent
+    .get(url)
+    .end((err, res) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
 
-          fs.writeFile(imageFilename, res.body, null, (err) => {
-            if (err) {
-              console.log(err);
-            }
+      if (res.status !== 200) {
+        console.log(`Download failed with HTTP status code ${res.status}.`);
+        return;
+      }
 
-            im.identify(imageFilename, processFileInfo);
-          });
-        });
+      fs.writeFile(imageFilename, res.body, null, (err) => {
+        if (err) {
+          console.log(err);
+        }
+
+        im.identify(imageFilename, processFileInfo);
+      });
     });
 }
 
