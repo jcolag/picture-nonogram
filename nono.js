@@ -62,13 +62,8 @@ function downloadAndProcessImage(html) {
         return;
       }
 
-      fs.writeFile(imageFilename, res.body, null, (err) => {
-        if (err) {
-          console.log(err);
-        }
-
-        im.identify(imageFilename, processFileInfo);
-      });
+      fs.writeFileSync(imageFilename, res.body);
+      im.identify(imageFilename, processFileInfo);
     });
 }
 
