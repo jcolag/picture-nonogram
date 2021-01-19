@@ -215,6 +215,22 @@ function processBits(err, stdout) {
     return;
   }
 
+  let html = '<html>\n<head>\n</head>\n<body>\n<table>\n<tr>\n<th></th>\n';
+
+  for (let col = 0; col < RleByColumn.length; col++) {
+    header = RleByColumn[col].join('<br>');
+    html += `<th>${header}</th>\n`;
+  }
+
+  html += '</tr>';
+  for (let row = 0; row < RleByRow.length; row++) {
+    header = RleByRow[row].join('&nbsp;');
+    html += `<tr>\n<th>${header}</th>\n`;
+    html += '<td></td>\n'.repeat(RleByColumn.length);
+    html += '</tr>\n';
+  }
+
+  html += '</table>\n</body>';
   fs.unlinkSync(smallFilename);
   fs.unlinkSync(bwFilename);
 }
