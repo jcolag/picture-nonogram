@@ -319,3 +319,8 @@ function simplifyAspectRatio(val, lim) {
   }
 }
 
+function encodeImage(filename) {
+  imageBinary = fs.readFileSync(filename);
+  return imageBinary.toString('base64');
+}
+
