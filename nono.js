@@ -215,8 +215,10 @@ function processBits(err, stdout) {
     return;
   }
 
-  let html = '<html>\n<head>\n</head>\n<body>\n<table>\n<tr>\n<th></th>\n';
+  let html = '<html>\n<head>\n';
 
+  html += '<link rel="stylesheet" href="style.css" charset="utf-8">\n';
+  html += '</head>\n<body>\n<table>\n<tr>\n<th></th>\n';
   for (let col = 0; col < RleByColumn.length; col++) {
     header = RleByColumn[col].join('<br>');
     html += `<th>${header}</th>\n`;
