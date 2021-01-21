@@ -215,6 +215,7 @@ function processBits(err, stdout) {
     return;
   }
 
+  const image = encodeImage(imageFilename);
   let html = '<html>\n<head>\n';
 
   html += '<link rel="stylesheet" href="style.css" charset="utf-8">\n';
@@ -232,7 +233,9 @@ function processBits(err, stdout) {
     html += '</tr>\n';
   }
 
-  html += '</table>\n</body>';
+  html += '</table>\n';
+  html += `<img src="data:image/png;base64,${image}">\n`;
+  html += '</body>\n';
   fs.unlinkSync(smallFilename);
   fs.unlinkSync(bwFilename);
 }
