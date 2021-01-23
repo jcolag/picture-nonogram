@@ -229,7 +229,7 @@ function processBits(err, stdout) {
   for (let row = 0; row < RleByRow.length; row++) {
     header = RleByRow[row].join('&nbsp;');
     html += `<tr>\n<th>${header}</th>\n`;
-    html += '<td></td>\n'.repeat(RleByColumn.length);
+    html += '<td></td>'.repeat(RleByColumn.length);
     html += '</tr>\n';
   }
 
