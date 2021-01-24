@@ -219,22 +219,22 @@ function processBits(err, stdout) {
   let html = '<html>\n<head>\n';
 
   html += '<link rel="stylesheet" href="style.css" charset="utf-8">\n';
-  html += '</head>\n<body>\n<table>\n<tr>\n<th></th>\n';
+  html += '</head>\n<body>\n  <table>\n    <tr>\n      <th></th>\n';
   for (let col = 0; col < RleByColumn.length; col++) {
     header = RleByColumn[col].join('<br>');
-    html += `<th>${header}</th>\n`;
+    html += `      <th>${header}</th>\n`;
   }
 
-  html += '</tr>';
+  html += '    </tr>';
   for (let row = 0; row < RleByRow.length; row++) {
-    header = RleByRow[row].join('&nbsp;');
-    html += `<tr>\n<th>${header}</th>\n`;
-    html += '<td></td>'.repeat(RleByColumn.length);
-    html += '</tr>\n';
+    header = RleByRow[row].join('&nbsp;&nbsp;');
+    html += `    <tr>\n      <th>${header}</th>\n`;
+    html += '      <td></td>\n'.repeat(RleByColumn.length);
+    html += '    </tr>\n';
   }
 
-  html += '</table>\n';
-  html += `<img src="data:image/png;base64,${image}">\n`;
+  html += '  </table>\n';
+  html += `  <img src="data:image/png;base64,${image}">\n`;
   html += '</body>\n';
   fs.unlinkSync(smallFilename);
   fs.unlinkSync(bwFilename);
