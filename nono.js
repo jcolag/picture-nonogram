@@ -237,7 +237,7 @@ function processBits(err, stdout) {
   }
 
   html += '  </table>\n';
-  html += `  <img src="data:image/png;base64,${image}">\n`;
+  html += `  <img class="hidden" id="result" src="data:image/png;base64,${image}">\n`;
   html += '</body>\n';
   fs.unlinkSync(smallFilename);
   fs.unlinkSync(bwFilename);
