@@ -225,11 +225,14 @@ function processBits(err, stdout) {
     html += `      <th>${header}</th>\n`;
   }
 
-  html += '    </tr>';
+  html += '    </tr>\n';
   for (let row = 0; row < RleByRow.length; row++) {
     header = RleByRow[row].join('&nbsp;&nbsp;');
     html += `    <tr>\n      <th>${header}</th>\n`;
-    html += '      <td></td>\n'.repeat(RleByColumn.length);
+    for (col = 0; col < RleByColumn.length; col++) {
+      html += `      <td id="${row}-${col}"`;
+      html += '></td>\n';
+    }
     html += '    </tr>\n';
   }
 
