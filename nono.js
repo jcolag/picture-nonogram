@@ -243,6 +243,8 @@ function processBits(err, stdout) {
     html += `    <tr>\n      <th>${header}</th>\n`;
     for (col = 0; col < RleByColumn.length; col++) {
       html += `      <td id="${row}-${col}"`;
+      html += ` onclick="handleClick(${row},${col})"`
+      html += ` oncontextmenu="handleContextmenu(${row},${col}); return false;"`
       html += '></td>\n';
     }
     html += '    </tr>\n';
