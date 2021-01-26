@@ -219,6 +219,18 @@ function processBits(err, stdout) {
   let html = '<html>\n<head>\n';
 
   html += '<link rel="stylesheet" href="style.css" charset="utf-8">\n';
+  html += '<script type="text/javascript">\n';
+  html += '  function handleClick(row, col) {\n';
+  html += '    const el = document.getElementById(`${row}-${col}`);\n';
+  html += '    el.classList.remove("off");\n';
+  html += '    el.classList.add("on");\n';
+  html += '  }\n';
+  html += '  function handleContextmenu(row, col) {\n';
+  html += '    const el = document.getElementById(`${row}-${col}`);\n';
+  html += '    el.classList.remove("on");\n';
+  html += '    el.classList.add("off");\n';
+  html += '  }\n';
+  html += '</script>\n';
   html += '</head>\n<body>\n  <table>\n    <tr>\n      <th></th>\n';
   for (let col = 0; col < RleByColumn.length; col++) {
     header = RleByColumn[col].join('<br>');
