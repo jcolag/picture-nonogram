@@ -220,6 +220,15 @@ function processBits(err, stdout) {
 
   html += '<link rel="stylesheet" href="style.css" charset="utf-8">\n';
   html += '<script type="text/javascript">\n';
+  html += '  const grid = [\n';
+  grid.forEach((row) => {
+    html += '    [';
+    row.forEach((cell) => {
+      html += `[${cell}],`;
+    });
+    html += '],\n';
+  });
+  html += '  ];\n';
   html += '  function handleClick(row, col) {\n';
   html += '    const el = document.getElementById(`${row}-${col}`);\n';
   html += '    el.classList.remove("off");\n';
