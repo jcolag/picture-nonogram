@@ -233,11 +233,13 @@ function processBits(err, stdout) {
   html += '    const el = document.getElementById(`${row}-${col}`);\n';
   html += '    el.classList.remove("off");\n';
   html += '    el.classList.add("on");\n';
+  html += '    grid[row][col].push(1);\n';
   html += '  }\n';
   html += '  function handleContextmenu(row, col) {\n';
   html += '    const el = document.getElementById(`${row}-${col}`);\n';
   html += '    el.classList.remove("on");\n';
   html += '    el.classList.add("off");\n';
+  html += '    grid[row][col].push(0);\n';
   html += '  }\n';
   html += '</script>\n';
   html += '</head>\n<body>\n  <table>\n    <tr>\n      <th></th>\n';
