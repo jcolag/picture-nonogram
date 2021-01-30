@@ -266,13 +266,13 @@ function processBits(err, stdout) {
   html += '</head>\n<body>\n  <table>\n    <tr>\n      <th></th>\n';
   for (let col = 0; col < RleByColumn.length; col++) {
     header = RleByColumn[col].join('<br>');
-    html += `      <th>${header}</th>\n`;
+    html += `      <th class="ch" id="col-${col}">${header}</th>\n`;
   }
 
   html += '    </tr>\n';
   for (let row = 0; row < RleByRow.length; row++) {
     header = RleByRow[row].join('&nbsp;&nbsp;');
-    html += `    <tr>\n      <th>${header}</th>\n`;
+    html += `    <tr>\n      <th class="rh" id="row-${row}">${header}</th>\n`;
     for (col = 0; col < RleByColumn.length; col++) {
       html += `      <td id="${row}-${col}"`;
       html += ` onclick="handleClick(${row},${col})"`
