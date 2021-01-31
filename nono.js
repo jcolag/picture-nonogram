@@ -243,6 +243,18 @@ function processBits(err, stdout) {
   html += '    grid[row][col].push(0);\n';
   html += '    checkGrid();\n';
   html += '  }\n';
+  html += '  function handleMouseEnter(row, col) {\n';
+  html += '    const rowHead = document.getElementById(`row-${row}`);\n';
+  html += '    const colHead = document.getElementById(`col-${col}`);\n';
+  html += '    rowHead.classList.add("highlight");\n';
+  html += '    colHead.classList.add("highlight");\n';
+  html += '  }\n';
+  html += '  function handleMouseLeave(row, col) {\n';
+  html += '    const rowHead = document.getElementById(`row-${row}`);\n';
+  html += '    const colHead = document.getElementById(`col-${col}`);\n';
+  html += '    rowHead.classList.remove("highlight");\n';
+  html += '    colHead.classList.remove("highlight");\n';
+  html += '  }\n';
   html += '  function checkGrid() {\n';
   html += '    const comparison = grid\n';
   html += '      .map((row) => row\n';
@@ -277,6 +289,8 @@ function processBits(err, stdout) {
       html += `      <td id="${row}-${col}"`;
       html += ` onclick="handleClick(${row},${col})"`
       html += ` oncontextmenu="handleContextmenu(${row},${col}); return false;"`
+      html += ` onmouseenter="handleMouseEnter(${row},${col})"`
+      html += ` onmouseleave="handleMouseLeave(${row},${col})"`
       html += '></td>\n';
     }
     html += '    </tr>\n';

@@ -15,3 +15,7 @@ td {
 .off {
   background-color: white;
 }
+.highlight {
+  background-color: black;
+  color: white;
+}
