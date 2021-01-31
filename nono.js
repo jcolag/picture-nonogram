@@ -284,6 +284,10 @@ function processBits(err, stdout) {
   html += '    </tr>\n';
   for (let row = 0; row < RleByRow.length; row++) {
     header = RleByRow[row].join('&nbsp;&nbsp;');
+        if (header.length === 0) {
+      header = '&nbsp;';
+    }
+
     html += `    <tr>\n      <th class="rh" id="row-${row}">${header}</th>\n`;
     for (col = 0; col < RleByColumn.length; col++) {
       html += `      <td id="${row}-${col}"`;
