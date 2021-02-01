@@ -303,6 +303,12 @@ function processBits(err, stdout) {
 
   html += '  </table>\n';
   html += `  <img class="hidden" id="result" src="data:image/png;base64,${image}">\n`;
+  html += '  <div id="opacity" class="slidecontainer hidden">\n';
+  html += '    Opacity:\n';
+  html += '    <input type="range" min="1" max="100" value="75"';
+  html += ' oninput="changeImageOpacity(this.value)"';
+  html += ' class="slider" id="opacity-range">\n';
+  html += '  </div>\n';
   html += '</body>\n';
   fs.unlinkSync(smallFilename);
   fs.unlinkSync(bwFilename);

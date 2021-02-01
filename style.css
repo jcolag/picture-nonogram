@@ -7,7 +7,7 @@ td {
   background-color: gray;
 }
 .hidden {
-  display: none;
+  display: none !important;
 }
 .on {
   background-color: black;
@@ -18,4 +18,31 @@ td {
 .highlight {
   background-color: black;
   color: white;
+}
+.slidecontainer {
+  display: inline-flex;
+  padding: 2px;
+  vertical-align: middle;
+  width: 50%;
+}
+.slider {
+  border: 1px solid gray;
+  opacity: 0.75;
+  transition: opacity .2s;
+  width: 90%;
+}
+.slider:hover {
+  opacity: 1;
+}
+.slider::-webkit-slider-thumb {
+  width: 25px;
+  height: 25px;
+  background: gray;
+  cursor: ew-resize;
+}
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: gray;
+  cursor: ew-resize;
 }
