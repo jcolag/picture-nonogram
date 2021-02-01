@@ -275,7 +275,8 @@ function processBits(err, stdout) {
   html += '    }\n';
   html += '  }\n';
   html += '</script>\n';
-  html += '</head>\n<body>\n  <table>\n    <tr>\n      <th></th>\n';
+  html += '</head>\n<body>\n  <table>\n    <tr>\n      <th>';
+  html += `${grid[0].length}x${grid.length} puzzle</th>\n`;
   for (let col = 0; col < RleByColumn.length; col++) {
     header = RleByColumn[col].join('<br>');
     html += `      <th class="ch" id="col-${col}">${header}</th>\n`;
