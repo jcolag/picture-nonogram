@@ -276,6 +276,10 @@ function processBits(err, stdout) {
   html += '      slider.classList.remove("hidden");\n';
   html += '    }\n';
   html += '  }\n';
+  html += '  function changeImageOpacity(o) {\n';
+  html += '    const image = document.getElementById("result");\n';
+  html += '    image.style.opacity = (o/100).toString();\n';
+  html += '  }\n';
   html += '</script>\n';
   html += '</head>\n<body>\n  <table>\n    <tr>\n      <th>';
   html += `${grid[0].length}x${grid.length} puzzle</th>\n`;
