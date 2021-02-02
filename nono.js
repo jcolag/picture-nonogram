@@ -269,9 +269,11 @@ function processBits(err, stdout) {
   html += '      )\n';
   html += '      .map((row) => row.filter((cell) => !cell))\n';
   html += '      .filter((row) => row.length > 0);\n';
-  html += '    const el = document.getElementById("result");\n';
+  html += '    const image = document.getElementById("result");\n';
+  html += '    const slider = document.getElementById("opacity");\n';
   html += '    if (comparison.length === 0) {\n';
-  html += '      el.classList.remove("hidden");\n';
+  html += '      image.classList.remove("hidden");\n';
+  html += '      slider.classList.remove("hidden");\n';
   html += '    }\n';
   html += '  }\n';
   html += '</script>\n';
