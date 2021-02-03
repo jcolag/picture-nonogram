@@ -318,6 +318,7 @@ function processBits(err, stdout) {
   html += ' class="slider" id="opacity-range">\n';
   html += '  </div>\n';
   html += '</body>\n';
+  fs.writeFileSync('output.html', html);
   fs.unlinkSync(smallFilename);
   fs.unlinkSync(bwFilename);
 }
