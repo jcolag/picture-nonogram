@@ -6,6 +6,12 @@ td,th {
 td {
   background-color: gray;
 }
+img {
+  position: absolute;
+  top: 161px;
+  left: 165px;
+  opacity: 0.75;
+}
 .hidden {
   display: none !important;
 }
@@ -18,6 +24,12 @@ td {
 .highlight {
   background-color: black;
   color: white;
+}
+.ch {
+  height: 150px;
+}
+.rh {
+  width: 150px;
 }
 .slidecontainer {
   display: inline-flex;
