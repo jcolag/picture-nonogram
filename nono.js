@@ -7,7 +7,6 @@ const minColor = 0.35;
 const maxColor = 0.75;
 let defaultPercentBlack = 66;
 
-
 const smallFilename = 'test-small.png';
 const bwFilename = 'test-bw.png';
 let imageFilename = 'downloaded-image.jpg';
