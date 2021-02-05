@@ -85,14 +85,14 @@ function processFileInfo(err, features) {
   targetWidth = features.width / divisor;
   targetHeight = features.height / divisor;
 
-  if (targetWidth > minimumSize && targetHeight > minimumSize) {
+  if (targetWidth * targetHeight > minimumSize * minimumSize * 2) {
     const newRatio = simplifyAspectRatio(targetWidth / targetHeight, 50);
 
     targetWidth = newRatio[0];
     targetHeight = newRatio[1];
   }
 
-  if (targetWidth < minimumSize || targetHeight < minimumSize) {
+  if (targetWidth * targetHeight < minimumSize * minimumSize) {
     let aspect = {
       height:  targetHeight,
       width:  targetWidth,
