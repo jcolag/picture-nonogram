@@ -228,11 +228,13 @@ function processBits(err, stdout) {
     html += '],\n';
   });
   html += '  ];\n';
+  html += '  const actionStack = [];\n';
   html += '  function handleClick(row, col) {\n';
   html += '    const el = document.getElementById(`${row}-${col}`);\n';
   html += '    el.classList.remove("off");\n';
   html += '    el.classList.add("on");\n';
   html += '    grid[row][col].push(1);\n';
+  html += '    actionStack.push({ row: row, col: col, value: 1 });\n';
   html += '    checkGrid();\n';
   html += '  }\n';
   html += '  function handleContextmenu(row, col) {\n';
@@ -240,6 +242,7 @@ function processBits(err, stdout) {
   html += '    el.classList.remove("on");\n';
   html += '    el.classList.add("off");\n';
   html += '    grid[row][col].push(0);\n';
+  html += '    actionStack.push({ row: row, col: col, value: 0 });\n';
   html += '    checkGrid();\n';
   html += '  }\n';
   html += '  function handleMouseEnter(row, col) {\n';
