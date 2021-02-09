@@ -92,6 +92,30 @@ function processFileInfo(err, features) {
     targetHeight = newRatio[1];
   }
 
+  while (targetWidth * targetHeight > minimumSize * minimumSize * 3) {
+    let ratio = targetWidth / targetHeight;
+
+    if (ratio > 1) {
+      if (ratio < 1.5) {
+        targetWidth -= 1;
+      } else {
+        targetWidth += 1;
+      }
+    } else {
+      if (ratio < 1.5) {
+        targetWidth += 1;
+      } else {
+        targetWidth -= 1;
+      }
+    }
+
+    ratio = targetWidth / targetHeight;
+    const newRatio = simplifyAspectRatio(ratio, 50);
+
+    targetWidth = newRatio[0];
+    targetHeight = newRatio[1];
+  }
+
   if (targetWidth * targetHeight < minimumSize * minimumSize) {
     let aspect = {
       height:  targetHeight,
