@@ -292,9 +292,11 @@ function processBits(err, stdout) {
   html += '      .filter((row) => row.length > 0);\n';
   html += '    const image = document.getElementById("result");\n';
   html += '    const slider = document.getElementById("opacity");\n';
+  html += '    const undo = document.getElementById("undo");\n';
   html += '    if (comparison.length === 0) {\n';
   html += '      image.classList.remove("hidden");\n';
   html += '      slider.classList.remove("hidden");\n';
+  html += '      undo.classList.add("hidden");\n';
   html += '    }\n';
   html += '  }\n';
   html += '  function changeImageOpacity(o) {\n';
@@ -338,7 +340,8 @@ function processBits(err, stdout) {
   html += ' oninput="changeImageOpacity(this.value)"';
   html += ' class="slider" id="opacity-range">\n';
   html += '  </div>\n';
-  html += '  <input type="button" onclick="handleUndo()" value="Undo"></input>\n';
+  html += '  <input id="undo" type="button" onclick="handleUndo()" ';
+  html += 'value="Undo"></input>\n';
   html += '</body>\n';
   fs.writeFileSync('output.html', html);
   fs.unlinkSync(smallFilename);
