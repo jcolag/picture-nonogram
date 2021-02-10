@@ -239,134 +239,52 @@ function processBits(err, stdout) {
   }
 
   const image = encodeImage(imageFilename);
-  let html = '<html>\n<head>\n';
+  let html = fs.readFileSync('template.html').toString();
 
-  html += '<link rel="stylesheet" href="style.css" charset="utf-8">\n';
-  html += '<script type="text/javascript">\n';
-  html += '  const grid = [\n';
+  let gridHtml = '';
   grid.forEach((row) => {
-    html += '    [';
+    gridHtml += '    [';
     row.forEach((cell) => {
-      html += `[${cell}],`;
+      gridHtml += `[${cell}],`;
     });
-    html += '],\n';
+    gridHtml += '],\n';
   });
-  html += '  ];\n';
-  html += '  const actionStack = [];\n';
-  html += '  function handleClick(row, col) {\n';
-  html += '    const el = document.getElementById(`${row}-${col}`);\n';
-  html += '    el.classList.remove("off");\n';
-  html += '    el.classList.add("on");\n';
-  html += '    grid[row][col].push(1);\n';
-  html += '    actionStack.push({ row: row, col: col, value: 1 });\n';
-  html += '    checkGrid();\n';
-  html += '  }\n';
-  html += '  function handleContextmenu(row, col) {\n';
-  html += '    const el = document.getElementById(`${row}-${col}`);\n';
-  html += '    el.classList.remove("on");\n';
-  html += '    el.classList.add("off");\n';
-  html += '    grid[row][col].push(0);\n';
-  html += '    actionStack.push({ row: row, col: col, value: 0 });\n';
-  html += '    checkGrid();\n';
-  html += '  }\n';
-  html += '  function handleMouseEnter(row, col) {\n';
-  html += '    const rowHead = document.getElementById(`row-${row}`);\n';
-  html += '    const colHead = document.getElementById(`col-${col}`);\n';
-  html += '    rowHead.classList.add("highlight");\n';
-  html += '    colHead.classList.add("highlight");\n';
-  html += '  }\n';
-  html += '  function handleMouseLeave(row, col) {\n';
-  html += '    const rowHead = document.getElementById(`row-${row}`);\n';
-  html += '    const colHead = document.getElementById(`col-${col}`);\n';
-  html += '    rowHead.classList.remove("highlight");\n';
-  html += '    colHead.classList.remove("highlight");\n';
-  html += '  }\n';
-  html += '  function handleUndo() {\n';
-  html += '    if (actionStack.length === 0) {\n';
-  html += '      return;\n';
-  html += '    }\n';
-  html += '    const lastAction = actionStack.pop();\n';
-  html += '    grid[lastAction.row][lastAction.col].pop();\n';
-  html += '    const cellState = grid[lastAction.row][lastAction.col].reverse();\n';
-  html += '    const el = document.getElementById(`${lastAction.row}-${lastAction.col}`);\n';
-  html += '    if (cellState.length === 1) {\n';
-  html += '      el.classList.remove("on");\n';
-  html += '      el.classList.remove("off");\n';
-  html += '    } else if (cellState[0] === 1) {\n';
-  html += '      el.classList.remove("off");\n';
-  html += '      el.classList.add("on");\n';
-  html += '    } else {\n';
-  html += '      el.classList.remove("on");\n';
-  html += '      el.classList.add("off");\n';
-  html += '    }\n';
-  html += '  }\n';
-  html += '  function checkGrid() {\n';
-  html += '    const comparison = grid\n';
-  html += '      .map((row) => row\n';
-  html += '        .map((cell) => [\n';
-  html += '          1 - cell[0],\n';
-  html += '          cell.length > 1 ? cell.slice(-1)[0] : -1\n';
-  html += '        ])\n';
-  html += '      )\n';
-  html += '      .map((row) => row\n';
-  html += '        .map((cell) => cell[0] === cell[1] ||';
-  html += ' (cell[0] === 0 && cell[1] < 0))\n';
-  html += '      )\n';
-  html += '      .map((row) => row.filter((cell) => !cell))\n';
-  html += '      .filter((row) => row.length > 0);\n';
-  html += '    const image = document.getElementById("result");\n';
-  html += '    const slider = document.getElementById("opacity");\n';
-  html += '    const undo = document.getElementById("undo");\n';
-  html += '    if (comparison.length === 0) {\n';
-  html += '      image.classList.remove("hidden");\n';
-  html += '      slider.classList.remove("hidden");\n';
-  html += '      undo.classList.add("hidden");\n';
-  html += '    }\n';
-  html += '  }\n';
-  html += '  function changeImageOpacity(o) {\n';
-  html += '    const image = document.getElementById("result");\n';
-  html += '    image.style.opacity = (o/100).toString();\n';
-  html += '  }\n';
-  html += '</script>\n';
-  html += '</head>\n<body>\n  <table>\n    <tr>\n      <th>';
-  html += `${grid[0].length}x${grid.length} puzzle</th>\n`;
+
+  let tableHtml = '    <tr>\n      <th>';
+  tableHtml += `${grid[0].length}x${grid.length} puzzle</th>\n`;
   for (let col = 0; col < RleByColumn.length; col++) {
     header = RleByColumn[col].join('<br>');
-    html += `      <th class="ch" id="col-${col}">${header}</th>\n`;
+    tableHtml += `      <th class="ch" id="col-${col}">${header}</th>\n`;
   }
 
-  html += '    </tr>\n';
+  tableHtml += '    </tr>\n';
   for (let row = 0; row < RleByRow.length; row++) {
     header = RleByRow[row].join('&nbsp;&nbsp;');
         if (header.length === 0) {
       header = '&nbsp;';
     }
 
-    html += `    <tr>\n      <th class="rh" id="row-${row}">${header}</th>\n`;
+    tableHtml += `    <tr>\n      <th class="rh" id="row-${row}">${header}</th>\n`;
     for (col = 0; col < RleByColumn.length; col++) {
-      html += `      <td id="${row}-${col}"`;
-      html += ` onclick="handleClick(${row},${col})"`
-      html += ` oncontextmenu="handleContextmenu(${row},${col}); return false;"`
-      html += ` onmouseenter="handleMouseEnter(${row},${col})"`
-      html += ` onmouseleave="handleMouseLeave(${row},${col})"`
-      html += '></td>\n';
+      tableHtml += `      <td id="${row}-${col}"`;
+      tableHtml += ` onclick="handleClick(${row},${col})"`
+      tableHtml += ` oncontextmenu="handleContextmenu(${row},${col}); return false;"`
+      tableHtml += ` onmouseenter="handleMouseEnter(${row},${col})"`
+      tableHtml += ` onmouseleave="handleMouseLeave(${row},${col})"`
+      tableHtml += '></td>\n';
     }
-    html += '    </tr>\n';
+    tableHtml += '    </tr>\n';
   }
 
-  html += '  </table>\n';
-  html += '  <img class="hidden" id="result"';
-  html += ` style="width: calc(${RleByColumn.length}*1.58em)"`;
-  html += ` src="data:image/png;base64,${image}">\n`;
-  html += '  <div id="opacity" class="slidecontainer hidden">\n';
-  html += '    Opacity:\n';
-  html += '    <input type="range" min="1" max="100" value="75"';
-  html += ' oninput="changeImageOpacity(this.value)"';
-  html += ' class="slider" id="opacity-range">\n';
-  html += '  </div>\n';
-  html += '  <input id="undo" type="button" onclick="handleUndo()" ';
-  html += 'value="Undo"></input>\n';
-  html += '</body>\n';
+  let imgHtml = '  <img class="hidden" id="result"';
+  imgHtml += ` style="width: calc(${RleByColumn.length}*1.58em)"`;
+  imgHtml += ` src="data:image/png;base64,${image}">\n`;
+
+  html = html
+    .replace('<!--INSERT_GRID_DATA-->', gridHtml)
+    .replace('<!--INSERT_TABLE-->', tableHtml)
+    .replace('<!--INSERT_IMAGE-->', imgHtml);
+
   fs.writeFileSync('output.html', html);
   fs.unlinkSync(smallFilename);
   fs.unlinkSync(bwFilename);
