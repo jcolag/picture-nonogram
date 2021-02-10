@@ -1,0 +1,110 @@
+<html>
+<head>
+  <link rel="stylesheet" href="style.css" charset="utf-8">
+  <script type="text/javascript">
+    const grid = [
+<!--INSERT_GRID_DATA-->
+    ];
+    const actionStack = [];
+    function handleClick(row, col) {
+      const el = document.getElementById(`${row}-${col}`);
+      el.classList.remove("off");
+      el.classList.add("on");
+      grid[row][col].push(1);
+      actionStack.push({ row: row, col: col, value: 1 });
+      checkGrid();
+    }
+    function handleContextmenu(row, col) {
+      const el = document.getElementById(`${row}-${col}`);
+      el.classList.remove("on");
+      el.classList.add("off");
+      grid[row][col].push(0);
+      actionStack.push({ row: row, col: col, value: 0 });
+      checkGrid();
+    }
+    function handleMouseEnter(row, col) {
+      const rowHead = document.getElementById(`row-${row}`);
+      const colHead = document.getElementById(`col-${col}`);
+      rowHead.classList.add("highlight");
+      colHead.classList.add("highlight");
+    }
+    function handleMouseLeave(row, col) {
+      const rowHead = document.getElementById(`row-${row}`);
+      const colHead = document.getElementById(`col-${col}`);
+      rowHead.classList.remove("highlight");
+      colHead.classList.remove("highlight");
+    }
+    function handleUndo() {
+      if (actionStack.length === 0) {
+        return;
+      }
+      const lastAction = actionStack.pop();
+      grid[lastAction.row][lastAction.col].pop();
+      const cellState = grid[lastAction.row][lastAction.col].reverse();
+      const el = document.getElementById(`${lastAction.row}-${lastAction.col}`);
+      if (cellState.length === 1) {
+        el.classList.remove("on");
+        el.classList.remove("off");
+      } else if (cellState[0] === 1) {
+        el.classList.remove("off");
+        el.classList.add("on");
+      } else {
+        el.classList.remove("on");
+        el.classList.add("off");
+      }
+    }
+    function checkGrid() {
+      const comparison = grid
+        .map((row) => row
+          .map((cell) => [
+            1 - cell[0],
+            cell.length > 1 ? cell.slice(-1)[0] : -1
+          ])
+        )
+        .map((row) => row
+          .map((cell) => cell[0] === cell[1] || (cell[0] === 0 && cell[1] < 0))
+        )
+        .map((row) => row.filter((cell) => !cell))
+        .filter((row) => row.length > 0);
+      const image = document.getElementById("result");
+      const slider = document.getElementById("opacity");
+      const undo = document.getElementById("undo");
+      if (comparison.length === 0) {
+        image.classList.remove("hidden");
+        slider.classList.remove("hidden");
+        undo.classList.add("hidden");
+      }
+    }
+    function changeImageOpacity(o) {
+      const image = document.getElementById("result");
+      image.style.opacity = (o/100).toString();
+    }
+    </script>
+</head>
+<body>
+  <table>
+<!--INSERT_TABLE-->
+  </table>
+<!--INSERT_IMAGE-->
+  <div id="opacity" class="slidecontainer hidden">
+    Opacity:
+    <input
+      type="range"
+      min="1"
+      max="100"
+      value="75"
+      oninput="changeImageOpacity(this.value)"
+      class="slider"
+      id="opacity-range"
+    >
+  </div>
+  <input
+    id="undo"
+    type="button"
+    onclick="handleUndo()"
+    value="Undo"
+  >
+  </input>
+</body>
+</html>
+
