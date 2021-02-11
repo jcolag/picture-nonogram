@@ -251,7 +251,8 @@ function processBits(err, stdout) {
   });
 
   let tableHtml = '    <tr>\n      <th>';
-  tableHtml += `${grid[0].length}x${grid.length} puzzle</th>\n`;
+  tableHtml += `${grid[0].length}x${grid.length} puzzle<br>\n`;
+  tableHtml += 'Time: <span id="timer"></span></th>\n';
   for (let col = 0; col < RleByColumn.length; col++) {
     header = RleByColumn[col].join('<br>');
     tableHtml += `      <th class="ch" id="col-${col}">${header}</th>\n`;
