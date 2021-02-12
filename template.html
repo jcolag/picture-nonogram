@@ -6,6 +6,19 @@
 <!--INSERT_GRID_DATA-->
     ];
     const actionStack = [];
+    function updateTime() {
+      const now = Date.now() - startTime;
+      const msec = now % 1000;
+      const sec = Math.trunc(now / 1000 % 60);
+      const min = Math.trunc(now / 60000 % 60);
+      const hr = Math.trunc(now / 3600000);
+      const el = document.getElementById('timer');
+      let time = `${min}:${sec}`;
+      if (hr > 0) {
+        time = `${hr}:${time}`;
+      }
+      el.innerText = time;
+    }
     function handleClick(row, col) {
       const el = document.getElementById(`${row}-${col}`);
       el.classList.remove("off");
