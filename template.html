@@ -6,6 +6,11 @@
 <!--INSERT_GRID_DATA-->
     ];
     const actionStack = [];
+    let startTime = Date.now();
+    let timer = null;
+    window.onload = function() {
+      timer = setInterval(updateTime, 100);
+    };
     function updateTime() {
       const now = Date.now() - startTime;
       const msec = now % 1000;
