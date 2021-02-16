@@ -282,7 +282,11 @@ function processBits(err, stdout) {
   imgHtml += ` style="width: calc(${RleByColumn.length}*1.58em)"`;
   imgHtml += ` src="data:image/png;base64,${image}">\n`;
 
-  let credit = `  <a href="${imageUrl}">Original image</a>`;
+  const extension = imageUrl.lastIndexOf('.');
+  const idStart = imageUrl.lastIndexOf('-') + 1;
+  const imageId = imageUrl.slice(idStart, extension);
+  let credit = `  <a href="https://pxhere.com/en/photo/${imageId}">`
+    + 'Original image</a>';
 
   html = html
     .replace('<!--INSERT_GRID_DATA-->', gridHtml)
