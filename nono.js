@@ -12,6 +12,7 @@ const bwFilename = 'test-bw.png';
 let imageFilename = 'downloaded-image.jpg';
 let targetWidth = -1;
 let targetHeight = -1;
+let imageUrl = '';
 
 if (process.argv.length < 3) {
   downloadRandomImageList();
@@ -46,10 +47,10 @@ function downloadAndProcessImage(html) {
   const src = ' src="';
   const urlStart = line.indexOf(src) + src.length;
   const urlEnd = line.indexOf('"', urlStart);
-  const url = line.slice(urlStart, urlEnd);
 
+  imageUrl = line.slice(urlStart, urlEnd);
   superagent
-    .get(url)
+    .get(imageUrl)
     .end((err, res) => {
       if (err) {
         console.log(err);
@@ -281,10 +282,13 @@ function processBits(err, stdout) {
   imgHtml += ` style="width: calc(${RleByColumn.length}*1.58em)"`;
   imgHtml += ` src="data:image/png;base64,${image}">\n`;
 
+  let credit = `  <a href="${imageUrl}">Original image</a>`;
+
   html = html
     .replace('<!--INSERT_GRID_DATA-->', gridHtml)
     .replace('<!--INSERT_TABLE-->', tableHtml)
-    .replace('<!--INSERT_IMAGE-->', imgHtml);
+    .replace('<!--INSERT_IMAGE-->', imgHtml)
+    .replace('<!--INSERT_CREDIT-->', credit);
 
   fs.writeFileSync('output.html', html);
   fs.unlinkSync(smallFilename);
