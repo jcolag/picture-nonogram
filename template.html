@@ -93,9 +93,11 @@
       const image = document.getElementById("result");
       const slider = document.getElementById("opacity");
       const undo = document.getElementById("undo");
+      const credit = document.getElementById("image-credit");
       if (comparison.length === 0) {
         image.classList.remove("hidden");
         slider.classList.remove("hidden");
+        credit.classList.remove("hidden");
         undo.classList.add("hidden");
         clearInterval(timer);
       }
@@ -130,7 +132,7 @@
     value="Undo"
   >
   </input>
-  <div id="c" class="hidden">
+  <div id="image-credit" class="hidden">
 <!--INSERT_CREDIT-->
   </div>
 </body>
