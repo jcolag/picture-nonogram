@@ -5,10 +5,16 @@
 }
 body {
 }
+table {
+  background-color: var(--background);
+}
 td,th {
   border: 1px solid var(--foreground);
   height: 1.25em;
   width: 1.25em;
+}
+th {
+  background-color: var(--background);
 }
 td {
   background-color: var(--neutral);
