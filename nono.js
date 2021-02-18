@@ -42,8 +42,7 @@ function downloadRandomImageList() {
 function downloadAndProcessImage(html) {
   const line = html
     .split('\n')
-    .filter((line) => line.indexOf('<a href="/en/photo/') >= 0)
-    [3];
+    .filter((line) => line.indexOf('<a href="/en/photo/') >= 0)[3];
   const src = ' src="';
   const urlStart = line.indexOf(src) + src.length;
   const urlEnd = line.indexOf('"', urlStart);
@@ -171,6 +170,10 @@ function processBwImage(err, stdout) {
     throw err;
   }
 
+  if (stdout) {
+    console.log(stdout);
+  }
+
   // This dumps a test description of each pixel, its coordinates
   // and color.
   im.convert(
@@ -196,8 +199,6 @@ function processBits(err, stdout) {
     .slice(1);
   const RleByRow = [];
   const RleByColumn = [];
-  let row = 0;
-  let column = 0;
 
   lines.forEach((l) => {
     if (l.length > 1) {
@@ -255,19 +256,19 @@ function processBits(err, stdout) {
   tableHtml += `${grid[0].length}x${grid.length} puzzle<br>\n`;
   tableHtml += 'Time: <span id="timer"></span></th>\n';
   for (let col = 0; col < RleByColumn.length; col++) {
-    header = RleByColumn[col].join('<br>');
+    const header = RleByColumn[col].join('<br>');
     tableHtml += `      <th class="ch" id="col-${col}">${header}</th>\n`;
   }
 
   tableHtml += '    </tr>\n';
   for (let row = 0; row < RleByRow.length; row++) {
-    header = RleByRow[row].join('&nbsp;&nbsp;');
-        if (header.length === 0) {
+    let header = RleByRow[row].join('&nbsp;&nbsp;');
+    if (header.length === 0) {
       header = '&nbsp;';
     }
 
     tableHtml += `    <tr>\n      <th class="rh" id="row-${row}">${header}</th>\n`;
-    for (col = 0; col < RleByColumn.length; col++) {
+    for (let col = 0; col < RleByColumn.length; col++) {
       tableHtml += `      <td id="${row}-${col}"`;
       tableHtml += ` onclick="handleClick(${row},${col})"`
       tableHtml += ` oncontextmenu="handleContextmenu(${row},${col}); return false;"`
@@ -312,7 +313,7 @@ function gcd(a, b) {
 function stripRle(encoding, valueToKeep) {
   const height = encoding.length;
 
-  for (i = 0; i < height; i++) {
+  for (let i = 0; i < height; i++) {
     const newRow = encoding[i]
       .filter((tuple) => tuple[0] === valueToKeep)
       .map((tuple) => tuple[1]);
@@ -382,7 +383,7 @@ function simplifyAspectRatio(val, lim) {
 }
 
 function encodeImage(filename) {
-  imageBinary = fs.readFileSync(filename);
+  const imageBinary = fs.readFileSync(filename);
   return imageBinary.toString('base64');
 }
 
