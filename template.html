@@ -13,12 +13,11 @@
     };
     function updateTime() {
       const now = Date.now() - startTime;
-      const msec = now % 1000;
       let sec = Math.trunc(now / 1000 % 60);
       if (sec < 10) {
         sec = `0${sec.toString()}`;
       }
-      const min = Math.trunc(now / 60000 % 60);
+      let min = Math.trunc(now / 60000 % 60);
       const hr = Math.trunc(now / 3600000);
       if (hr > 0 && min < 10) {
         min = `0${min.toString()}`;
@@ -125,13 +124,15 @@
       id="opacity-range"
     >
   </div>
-  <input
-    id="undo"
-    type="button"
-    onclick="handleUndo()"
-    value="Undo"
-  >
-  </input>
+  <div>
+    <input
+      id="undo"
+      type="button"
+      onclick="handleUndo()"
+      value="Undo"
+    >
+    </input>
+  </div>
   <div id="image-credit" class="hidden">
 <!--INSERT_CREDIT-->
   </div>
