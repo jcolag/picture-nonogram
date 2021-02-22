@@ -18,6 +18,7 @@ th {
 }
 td {
   background-color: var(--neutral);
+  cursor: pointer;
 }
 img {
   position: absolute;
