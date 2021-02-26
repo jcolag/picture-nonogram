@@ -298,6 +298,7 @@ function processBits(err, stdout) {
   fs.writeFileSync('output.html', html);
   fs.unlinkSync(smallFilename);
   fs.unlinkSync(bwFilename);
+  fs.unlinkSync(imageFilename);
 }
 
 function gcd(a, b) {
