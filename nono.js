@@ -13,6 +13,7 @@ let imageFilename = 'downloaded-image.jpg';
 let targetWidth = -1;
 let targetHeight = -1;
 let imageUrl = '';
+let footer = '';
 
 if (process.argv.length < 3) {
   downloadRandomImageList();
@@ -289,11 +290,17 @@ function processBits(err, stdout) {
   let credit = `  <a href="https://pxhere.com/en/photo/${imageId}">`
     + 'Original image</a>';
 
+  try {
+    footer = fs.readFileSync('footer.html').toString();
+  } catch (e) {
+  }
+
   html = html
     .replace('<!--INSERT_GRID_DATA-->', gridHtml)
     .replace('<!--INSERT_TABLE-->', tableHtml)
     .replace('<!--INSERT_IMAGE-->', imgHtml)
-    .replace('<!--INSERT_CREDIT-->', credit);
+    .replace('<!--INSERT_CREDIT-->', credit)
+    .replace('<!--INSERT_FOOTER-->', footer);
 
   fs.writeFileSync('output.html', html);
   fs.unlinkSync(smallFilename);
