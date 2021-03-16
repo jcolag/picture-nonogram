@@ -36,7 +36,11 @@
       el.classList.remove("off");
       el.classList.add("on");
       grid[row][col].push(1);
-      actionStack.push({ row: row, col: col, value: 1 });
+      actionStack.push({
+        col,
+        row,
+        value: 1,
+      });
       checkGrid();
     }
     function handleContextmenu(row, col) {
@@ -44,7 +48,11 @@
       el.classList.remove("on");
       el.classList.add("off");
       grid[row][col].push(0);
-      actionStack.push({ row: row, col: col, value: 0 });
+      actionStack.push({
+        col,
+        row,
+        value: 0
+      });
       checkGrid();
     }
     function handleMouseEnter(row, col) {
@@ -84,11 +92,9 @@
           .map((cell) => [
             1 - cell[0],
             cell.length > 1 ? cell.slice(-1)[0] : -1
-          ])
-        )
+          ]))
         .map((row) => row
-          .map((cell) => cell[0] === cell[1] || (cell[0] === 0 && cell[1] < 0))
-        )
+          .map((cell) => cell[0] === cell[1] || cell[0] === 0 && cell[1] < 0))
         .map((row) => row.filter((cell) => !cell))
         .filter((row) => row.length > 0);
       const image = document.getElementById("result");
@@ -105,7 +111,7 @@
     }
     function changeImageOpacity(o) {
       const image = document.getElementById("result");
-      image.style.opacity = (o/100).toString();
+      image.style.opacity = (o / 100).toString();
     }
     </script>
 </head>
