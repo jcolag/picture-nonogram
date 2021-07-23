@@ -22,9 +22,13 @@ if (process.argv.length < 3) {
   processExistingImage(process.argv[2]);
 }
 
-function downloadRandomImageList() {
+function downloadRandomImageList(pagename) {
+  if (!pagename) {
+    pagename = 'https://commons.wikimedia.org/wiki/Special:Random/File';
+  }
+
   superagent
-    .get('https://pxhere.com/en/random')
+    .get(pagename)
     .end((err, res) => {
       if (err) {
         console.log(err);
@@ -43,7 +47,7 @@ function downloadRandomImageList() {
 function downloadAndProcessImage(html) {
   const line = html
     .split('\n')
-    .filter((line) => line.indexOf('<a href="/en/photo/') >= 0)[3];
+    .filter((line) => line.indexOf('<img alt="File:') >= 0)[0];
   const src = ' src="';
   const urlStart = line.indexOf(src) + src.length;
   const urlEnd = line.indexOf('"', urlStart);
@@ -51,6 +55,7 @@ function downloadAndProcessImage(html) {
   imageUrl = line.slice(urlStart, urlEnd);
   superagent
     .get(imageUrl)
+    .set('User-Agent', 'Picture-to-Nonogram Downloader')
     .end((err, res) => {
       if (err) {
         console.log(err);
