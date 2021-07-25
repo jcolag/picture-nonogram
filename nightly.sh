@@ -6,6 +6,7 @@ mkdir "${newdir}"
 mv ${HOME}/www/nono/index.html "${newdir}"
 /usr/bin/node ${HOME}/apps/picture-nonogram/nono.js
 mv ${HOME}/apps/picture-nonogram/output.html ${HOME}/www/nono/index.html
+ln -s "${HOME}/www/nono/style.css" "${newdir}/style.css"
 echo "<!DOCTYPE html><html lang='en-US'><head>" > "${archive}"
 echo "<title>Archives</title>" >> "${archive}"
 echo "<link rel='stylesheet' href='/nono/style.css' charset='utf-8'>" >> "${archive}"
