@@ -14,6 +14,7 @@ let targetWidth = -1;
 let targetHeight = -1;
 let imageUrl = '';
 let footer = '';
+let originalPage = '';
 
 if (process.argv.length < 3) {
   downloadRandomImageList();
@@ -40,6 +41,7 @@ function downloadRandomImageList(pagename) {
         return;
       }
 
+      originalPage = res.req.protocol + '//' + res.req.host + res.req.path;
       downloadAndProcessImage(res.text);
     });
 }
@@ -289,10 +291,7 @@ function processBits(err, stdout) {
   imgHtml += ` style="width: calc(${RleByColumn.length}*1.58em)"`;
   imgHtml += ` src="data:image/png;base64,${image}">\n`;
 
-  const extension = imageUrl.lastIndexOf('.');
-  const idStart = imageUrl.lastIndexOf('-') + 1;
-  const imageId = imageUrl.slice(idStart, extension);
-  let credit = `  <a href="https://pxhere.com/en/photo/${imageId}">`
+  let credit = `  <a href="${originalPage}">`
     + 'Original image</a>';
 
   try {
