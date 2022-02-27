@@ -41,7 +41,10 @@ function downloadRandomImageList(pagename) {
         return;
       }
 
-      originalPage = res.req.protocol + '//' + res.req.host + res.req.path;
+      originalPage = res.req.agent.protocol +
+        '//' +
+        res.req.socket._host +
+        res.req.path;
       downloadAndProcessImage(res.text);
     });
 }
