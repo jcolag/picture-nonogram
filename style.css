@@ -4,6 +4,7 @@
   --foreground: black;
 }
 body {
+  background-color: var(--background);
 }
 table {
   background-color: var(--background);
