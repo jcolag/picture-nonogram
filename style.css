@@ -1,10 +1,11 @@
 :root {
-  --background: white;
-  --neutral: gray;
-  --foreground: black;
+  --background: #7dacc5;
+  --neutral: #f1ebd9;
+  --foreground: #49281b;
 }
 body {
-  background-color: var(--background);
+  background-color: #8fb7cd;
+  background-image: url("/images/square_bg.png");
 }
 table {
   background-color: var(--background);
