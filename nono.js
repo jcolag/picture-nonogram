@@ -30,6 +30,7 @@ function downloadRandomImageList(pagename) {
 
   superagent
     .get(pagename)
+    .set('User-Agent', 'Colagioia-Nonogram-Puzzle-Downloader')
     .end((err, res) => {
       if (err) {
         console.log(err);
