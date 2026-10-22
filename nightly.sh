@@ -1,4 +1,9 @@
 #!/bin/sh
+
+# SPDX-FileCopyrightText: 2020 John Colagioia <john@colagioia.net>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 archive="${HOME}/www/nono/archive.html"
 today=$(faketime '1 day ago' date '+%Y%m%d')
 newdir="${HOME}/www/nono/${today}"
